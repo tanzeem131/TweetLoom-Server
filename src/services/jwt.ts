@@ -6,7 +6,7 @@ const JWT_SECRET = "$all@143."
 
 class JWTService{
     public static generateTokenForUser(user:User){
-        const payload = {
+        const payload:JWTUser = {
             id:user?.id,
             email:user?.email,
         };
@@ -14,7 +14,12 @@ class JWTService{
         return token;
     }
     public static decodeToken(token:string){
-        return JWT.verify(token,JWT_SECRET) as JWTUser;
+        // return JWT.verify(token,JWT_SECRET) as JWTUser;
+        try {
+            return JWT.verify(token, JWT_SECRET) as JWTUser;
+          } catch (error) {
+            return null;
+        }
     }
 }
 
